@@ -1,12 +1,16 @@
 import pandas as pd
 import streamlit as st
 from streamlit import spinner
+import zipfile
 import pickle
 
 movies_df = pickle.load(open('movies.pkl', 'rb'))
 movies_list = movies_df['title'].values
 movies = pd.DataFrame(movies_list)
-similarity = pickle.load(open('similarity.pkl', 'rb'))
+# similarity = pickle.load(open('similarity.pkl', 'rb'))
+with zipfile.ZipFile('similarity.pkl.zip', 'r') as zip_ref:
+    with zip_ref.open('similarity.pkl') as file:
+        similarity = pickle.load(file)
 import requests
 
 # st.write(movies_df)
